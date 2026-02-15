@@ -1,0 +1,17 @@
+,,,,
+,,,,
+Column Name,Original Source & Format,Cleaning Actions Taken,Imputation Strategy (Missing Values),Business Relevance & Analytical Value
+(Entire Dataset),"~10,400 raw rows",Removed 431 duplicate rows based on product_url and title.,N/A,
+title,title (Text),Deleted rows where title was missing.,Deleted Rows (Essential unique identifier missing).,Product Identification: Essential for identifying specific high-performing items and analyzing keyword trends in product names.
+rating,"rating (""4.4 out of 5 stars"")",Extracted first 3 chars. Converted valid ratings to numbers.,"Filled with ""NOT RATED"". Explicitly labeled missing data.",Customer Satisfaction Metric: Key indicator of product quality. Used to correlate customer sentiment with sales volume (Do higher ratings = higher sales?).
+number_of_reviews,"number_of_reviews (""2,655"")",Removed commas. Converted to numeric.,Filled with 0. Assumption: Null implies zero reviews exist.,"Social Proof & Trust: Represents the ""popularity"" and ""age"" of a product. High review counts often drive higher conversion rates."
+Sales_Clean,Derived from bought_in_last_month,"Extracted integers from text (e.g., ""2K+"" -> 2000).",Filled with 0. Assumption: Missing sales data implies negligible sales.,"Volume Metric: The primary measure of demand. Used to identify ""Best Sellers"" vs. ""Slow Movers."""
+Final_Price,"Derived from current, variant, listed",Consolidated 3 price columns into one master column using Waterfall logic.,"Filled with ""N/A"". Left as text to avoid pricing errors.","Revenue Driver: Critical for calculating Total Revenue. Also used to analyze ""Price Elasticity"" (Does lowering the price increase sales?)."
+Estimated_Revenue,(Calculated Column),Formula: Sales * Price.,"Calculated. Logic: If Price is ""N/A"" or Sales is 0, Revenue = $0.00.",North Star Metric: The ultimate measure of business success. Focuses analysis on value rather than just volume.
+is_best_seller,is_best_seller,"Standardized to ""Best Seller"" or ""Deal"".","Filled with ""No Badge"". Created a clean category for comparison.","Trust Signal: innovative ""Badge"" that influences buyer psychology. We analyze if this badge actually boosts sales."
+is_sponsored,is_sponsored,"Converted to Binary Flag (1=Sponsored, 0=Organic).",Filled with 0. Assumption: Missing tag implies Organic.,"Marketing Efficiency: differentiating ""Paid"" vs. ""Organic"" traffic. helps determine if ad spend is generating a return on investment (ROI)."
+is_couponed,is_couponed,"Converted to Binary Flag (1=Has Coupon, 0=No Coupon).",Filled with 0. Assumption: Missing tag implies No Coupon.,Promotion Strategy: Measures the impact of discounts on conversion. (Do coupons cannibalize revenue or boost volume?).
+in_stock,Derived from buy_box_availability,"Created Binary Flag based on ""Add to Cart"" value. Deleted original column.",Filled with 0. Assumption: Missing button implies Out of Stock.,Supply Chain Health: A critical operational metric. Out-of-stock items represent lost revenue opportunities.
+free_shipping,Derived from delivery_details,"Created Binary Flag based on ""FREE"" keyword. Deleted original column.",Filled with 0. Assumption: Missing text implies paid shipping.,Logistics Strategy: A major conversion driver. We analyze if free shipping encourages customers to buy more.
+sustainability...,sustainability_badges,Deleted Column. High null rate (92%) and mixed values created noise.,N/A,
+image_url / collected...,URLs / Timestamps,Deleted Columns. Irrelevant for statistical analysis.,N/A,
