@@ -1,123 +1,121 @@
-# Amazon Product Sales Data Analysis
+# Amazon E-Commerce Sales Performance and Profitability Analysis
 
 ## Project Overview
 
-This project contains a comprehensive analysis of Amazon product sales performance data collected in August 2025. The dataset includes detailed information about product ratings, reviews, pricing, and sales velocity indicators ("bought in last month"), providing insights into consumer behavior and product performance trends.
+**Sector:** E-Commerce / Online Retail  
+**Institute:** Newton School of Technology (Rishihood University)  
+**Faculty Name:** Satyaki Das
 
-**Note:** This dataset is a **random sample of 10,000 records** from the original larger dataset, ensuring a representative distribution across the collection period.
+### Problem Statement
 
-## Dataset Information
+In the highly competitive Amazon marketplace, sellers struggle to identify the specific levers that drive revenue. Without structured analysis, it is difficult to determine if investing in "Sponsored Ads," pursuing a "Best Seller" badge, or lowering prices via "Coupons" yields the highest Return on Investment (ROI).
 
-- **Total Records:** 10,000 data points
-- **Time Period:** August 21, 2025 to August 30, 2025
-- **Number of Unique Products:** 2,568 unique product titles
-- **Domain:** E-commerce (Electronics, Office Supplies, Accessories)
+### Objectives
 
-## Directory Structure
+- Analyze Amazon product data to identify key sales drivers.
+- Identify how ratings, price, promotions, and stock affect sales and revenue.
+- Provide clear insights and a dashboard for data-driven decision-making.
 
-```
-├── 1.Raw_dataset/          # Original processed data (10k sample)
-├── 2.Cleaned_dataset/      # Cleaned and processed data
-├── 3.Calculation_pivot_table/  # Statistical calculations and analysis
-├── 4.Dashboard/            # Dashboard-ready data
-├── 6.Presentation/         # Presentation materials
-└── README.md               # Project documentation
-```
+### Team Members
 
-## Column Specifications and Statistical Analysis
+- **Mayank Pillai** - 2401010268 (Project Lead)
+- **Sahil Chand** - 2401020104 (Dashboard Lead)
+- **Kunal Vats** - 2401010245 (Analysis Lead)
+- **Shaurya Sharma** - 2401010439 (Strategy Lead)
+- **Praanshu Ranjan** - 2401010329 (PPT and Quality Lead)
+- **Anshu Yadav** - 2401010081 (Data Lead)
 
-### 1. Title (Product Name)
+---
 
-- **Type:** Categorical / Text
-- **Total Rows:** 10,000
-- **Unique Values:** 2,568
-- **Empty Cells:** 0
-- **Note:** High duplication (approx. 3.9 records per product) indicates time-series tracking.
+## Data Dictionary
 
-### 2. Rating
+The dataset is structured at the product level. Below is the dictionary detailing business relevance and cleaning actions taken:
 
-- **Type:** Numeric (Float)
-- **Mean:** 4.40 out of 5
-- **Median:** 4.50
-- **Empty Cells:** 250 (2.5%)
+| Column Name           | Business Relevance                               | Cleaning Action Taken                                                      |
+| :-------------------- | :----------------------------------------------- | :------------------------------------------------------------------------- |
+| **title**             | Product ID: Key for identifying items.           | Deleted blank rows.                                                        |
+| **rating**            | Quality Metric: Correlates sentiment with sales. | Deleted rows with missing values to ensure quality data.                   |
+| **Sales_Clean**       | Volume Metric: Primary measure of demand.        | Extracted integers (e.g., "2K+" → 2000).                                   |
+| **Final_Price**       | Revenue Driver: Critical for financial modeling. | Consolidated 3 columns; Deleted rows where price was missing.              |
+| **Estimated_Revenue** | North Star Metric: Ultimate success measure.     | Calculated: `Sales * Price`.                                               |
+| **is_best_seller**    | Trust Signal: Influences buyer psychology.       | Filled blanks with "No Badge".                                             |
+| **is_sponsored**      | Marketing Efficiency: Measures ad ROI.           | Converted to Binary (1=Sponsored, 0=Organic).                              |
+| **in_stock**          | Supply Chain: Operational health metric.         | Created Binary Flag based on "Add to Cart" value. Deleted original column. |
+| **free_shipping**     | Logistics: Conversion driver.                    | Converted to Binary (1=Free Ship, 0=Paid).                                 |
 
-### 3. Number of Reviews
+---
 
-- **Type:** Numeric (Integer)
-- **Total Reviews (Sum):** 32,178,934
-- **Mean:** 3,300
-- **Max:** 645,416
-- **Empty Cells:** 250
+## Cleaning Notes
 
-### 4. Bought in Last Month (Sales Velocity)
+The data cleaning and preparation process focused on ensuring statistical significance and analytical agility:
 
-- **Type:** Categorical / Text
-- **Unique Values:** 44
-- **Top 5 Values:**
-  1. "100+ bought in past month": 2,036 records
-  2. "50+ bought in past month": 1,375 records
-  3. "200+ bought in past month": 1,280 records
-  4. "No featured offers available": 1,060 records
-  5. Missing/Blank: 802 records
-- **Empty Cells:** 802
+1.  **Stratified Sampling:** A large-scale dataset of Amazon product listings was sampled to ensure representativeness.
+2.  **Validation:** Removing duplicates and validating pricing information.
+3.  **Feature Engineering:**
+    - **Revenue Calculation:** `Revenue = Sales * Price` (Formula: `=IF(ISNUMBER(H2), D2 * H2, 0)`)
+    - **Price Waterfall:** Consolidated multiple price columns to prioritize Current Price → Variant Price → Listed Price.
+    - **Normalization:** Categorical values (like badges and shipping) were converted to binary flags for analysis.
 
-### 5. Current / Discounted Price
+**Current Dataset File:** `1.Raw_dataset/amazon_products_sales_data.csv`  
+**Records:** 10,000 (Random Sample)  
+**Time Period:** August 21, 2025 to August 30, 2025
 
-- **Type:** Numeric (Currency)
-- **Mean:** $211.36
-- **Median:** $71.89
-- **Range:** $2.99 - $4,699.00
-- **Empty Cells:** 2,701 (27.0%)
-- **Insight:** Consistent with the full dataset, ~27% of records lack current price data.
+---
 
-### 6. Listed Price
+## Key Insights
 
-- **Type:** Numeric (Currency)
-- **Mean:** $205.31
-- **Empty Cells:** 0
+### 1. Quality over Quantity
 
-### 7. Is Best Seller
+Products with ratings between **4.5 - 5 stars** generate the highest total revenue. High ratings directly impact customer trust and conversion rates.
 
-- **Type:** Categorical
-- **Distribution:**
-  - No Badge: 9,572
-  - Amazon's Choice: 161
-  - Best Seller: 65
+### 2. The "Badge" Multiplier
 
-### 8. Is Sponsored
+Items with a **"Best Seller" badge** generate approximately **5x to 10x higher revenue** than generic items, proving it is the most valuable asset for a seller.
 
-- **Type:** Categorical
-- **Distribution:**
-  - Organic: 8,332 (83.3%)
-  - Sponsored: 1,668 (16.7%)
+### 3. Ads Drive Volume
 
-### 9. Delivery Details
+"Sponsored" products show significantly higher unit sales (Volume) but often lower margins. This suggests ads are a vital tool for visibility but should be balanced against per-unit profit.
 
-- **Type:** Categorical / Text
-- **Top Promise:** "Delivery Mon, Sep 1" (1,452 records)
+### 4. Stock & Logistics
 
-### 10. Sustainability Badges
+- **Stock Availability:** In-stock products contribute to the majority (~76%) of sales. Out-of-stock products present a significant revenue risk.
+- **Free Shipping:** Acts as a strong conversion driver and influences pricing strategies.
 
-- **Type:** Categorical
-- **Count of Non-Null:** 770
-- **Top Badges:**
-  - Small Business: 295
-  - Carbon impact: 178
-  - Works with Alexa: 108
+---
 
-## Key Findings & Data Quality
+## Dashboard Summaries
 
-1.  **Representative Sample:** The 10k random sample maintains similar statistical properties (means, distributions) to the original 42k dataset.
-    - Mean Rating: 4.40 (Same)
-    - Sponsored Ratio: ~16.7% (vs 16.4%)
-    - Price Missingness: ~27% (Same)
-2.  **Discount Strategy:** Approximately **29.0%** of the records show a discounted price (Current < Listed).
-3.  **Data Completeness:** High quality for core metrics (Title, Listed Price), with expected missingness in specific features like Badges and Current Price.
+The Executive Dashboard was designed to track sales performance and revenue trends.
 
-## Data Processing Pipeline
+### KPI Framework
 
-1.  **Sampling:** Random selection of 10,000 rows from the original 42,675 record dataset.
-2.  **Cleaning:**
-    - Parsing currency fields.
-    - Standardizing Date formats.
-3.  **Analysis:** Statistical profiling performed on the sampled subset.
+- **Revenue:** `Sales × Price`
+- **Avg Rating:** Average of product ratings.
+- **Sponsored %:** `Sponsored Items / Total Items`
+
+### View Structure
+
+1.  **Top Section (KPIs):** Displays Total Revenue, Average Revenue, Units Sold, and Revenue From Best Seller.
+2.  **Middle Section (Charts):**
+    - _Rating vs Revenue:_ Visualizes how 4.0-5.0 rated products dominate sales.
+    - _Stock Availability:_ Breakdowns of sales by stock status.
+3.  **Bottom Section (Comparisons):**
+    - Sponsorship performance (Sponsored vs Organic).
+    - Best-seller impact.
+    - Coupon and Shipping comparisons.
+
+### Interactive Features
+
+The dashboard includes filters for **Rating, Sponsorship, Stock, Coupons, and Free Shipping**, enabling dynamic drill-down analysis for specific product segments.
+
+---
+
+## Future Scope
+
+- **Time-Based Forecasting:** Perform time-series analysis to predict future demand.
+- **Customer Segmentation:** Integrate demographic data for deeper buyer insights.
+- **Category Analysis:** Granular performance tracking by specific product categories.
+
+## Conclusion
+
+The project successfully identified that **ratings, sponsorship, stock availability, and "Best Seller" badges** are the primary drivers of revenue on Amazon. The accompanying dashboard provides actionable strategies to optimize these levers for improved visibility and profitability.
