@@ -86,6 +86,10 @@ The dataset is structured at the product level. Each row represents one Amazon p
 
 **Objective:** To track sales performance, revenue trends, and key drivers like ratings, sponsorship, stock, and shipping.
 
+### Dataset Analysis
+
+![Dashboard Screenshot](Dashboard/Dashboard.png)
+
 ### View Structure
 
 1.  **Top Section (KPIs):** Displays Total Revenue, Average Revenue, Units Sold, and Revenue per Unit (Sales Efficiency).
